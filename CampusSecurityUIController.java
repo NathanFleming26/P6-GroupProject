@@ -28,7 +28,6 @@ import javafx.scene.text.TextAlignment;
 public class CampusSecurityUIController implements Initializable 
 {   
     private Boolean barrierRaised;
-    private Boolean barrierLowered;
     
     //<editor-fold defaultstate="collapsed" desc="Declare Elements">
     @FXML
@@ -50,10 +49,8 @@ public class CampusSecurityUIController implements Initializable
         System.out.println("Barrier Raised");
         lbl_barrierStatus.setTextFill(Color.GREEN);
         lbl_barrierStatus.setText("RAISED");
-        barrierLowered = false;
         barrierRaised = true;
-        System.out.println("\nRaised - " + barrierRaised.toString());
-        System.out.println("Lowered - " + barrierLowered.toString() + "\n");
+        System.out.println("\nBarrier Raised - " + barrierRaised.toString());
         return barrierRaised;
     }//raiseBarrier
     
@@ -64,9 +61,7 @@ public class CampusSecurityUIController implements Initializable
         lbl_barrierStatus.setTextFill(Color.RED);
         lbl_barrierStatus.setText("LOWERED");
         barrierRaised = false;
-        barrierLowered = true;
         System.out.println("\nRaised - " + barrierRaised.toString());
-        System.out.println("Lowered - " + barrierLowered.toString() + "\n");
         return barrierLowered;
     }//lowerBarrier
 //</editor-fold>
