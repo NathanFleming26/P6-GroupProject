@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainPageController">
+  <tabs>
+    <Tab text="Issue Visitor Permit">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <RadioButton fx:id="rd1" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#armRadioButton" text="Regular Visitor" />
+                  <Label layoutX="36.0" layoutY="59.0" text="Uni Member Name:" />
+                  <TextField fx:id="paneOneMemberName" layoutX="151.0" layoutY="55.0" />
+                  <Label layoutX="36.0" layoutY="94.0" text="Visitor Name:" />
+                  <TextField fx:id="paneOneVisitorName" layoutX="151.0" layoutY="90.0" />
+                  <Label layoutX="36.0" layoutY="131.0" text="Car Registration:" />
+                  <TextField fx:id="paneOneCarRegistration" layoutX="151.0" layoutY="127.0" />
+                  <Label layoutX="36.0" layoutY="169.0" text="Permit Start Date: " />
+                  <Label layoutX="36.0" layoutY="210.0" text="Permit End Date:" />
+                  <Button fx:id="paneOneSubmitbtn" layoutX="465.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#addVisitor" text="Submit" />
+                  <DatePicker fx:id="paneOneStartDate" layoutX="151.0" layoutY="165.0" />
+                  <DatePicker fx:id="paneOneEndDate" disable="true" layoutX="151.0" layoutY="206.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Issue Perminant Visitor Permit">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="38.0" layoutY="47.0" text="Visitor/Company Name:" />
+                  <TextField fx:id="paneTwoVisitorName" layoutX="174.0" layoutY="43.0" />
+                  <TextField fx:id="paneTwoCarRegistration" layoutX="174.0" layoutY="83.0" />
+                  <Label layoutX="38.0" layoutY="87.0" text="Car Registration:" />
+                  <Label layoutX="38.0" layoutY="130.0" text="Issue Date:" />
+                  <Button fx:id="paneTwoSubmitbtn" layoutX="465.0" layoutY="300.0" mnemonicParsing="false" text="Submit" />
+                  <DatePicker fx:id="paneTwoIssueDate" layoutX="167.0" layoutY="126.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Issue Member Permit">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="38.0" layoutY="47.0" text="Member Name:" />
+                  <TextField fx:id="paneThreeMemberName" layoutX="136.0" layoutY="43.0" />
+                  <TextField fx:id="paneThreeCarRegistration" layoutX="136.0" layoutY="83.0" />
+                  <Label layoutX="38.0" layoutY="87.0" text="Car Registration:" />
+                  <Label layoutX="38.0" layoutY="128.0" text="Issue Date" />
+                  <DatePicker fx:id="paneThreeIssueDate" layoutX="136.0" layoutY="124.0" />
+                  <Button fx:id="paneThreeAddBtn" layoutX="300.0" layoutY="83.0" mnemonicParsing="false" onMouseClicked="#addCars" text="Add" />
+                  <Button fx:id="paneThreeSubmitbtn" layoutX="465.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#addMember" text="Submit" />
+                  <TextArea fx:id="paneThreeTextArea" editable="false" layoutX="373.0" layoutY="24.0" prefHeight="200.0" prefWidth="200.0" />
+               </children></AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Permit Options">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="38.0" layoutY="47.0" text="Add Warning:" />
+                  <TextField fx:id="paneFourWarningReg" layoutX="166.0" layoutY="43.0" promptText="Vechicle Registration" />
+                  <TextField fx:id="paneFourRemoveWarningReg" layoutX="166.0" layoutY="84.0" promptText="Vechicle Registration" />
+                  <Label layoutX="38.0" layoutY="88.0" text="Remove Warning(s):" />
+                  <ComboBox fx:id="paneFourNumberOfWarnings" layoutX="326.0" layoutY="84.0" prefHeight="25.0" prefWidth="54.0" visibleRowCount="3" />
+                  <Button fx:id="paneFourWarningSubmitbtn" layoutX="326.0" layoutY="43.0" mnemonicParsing="false" onMouseClicked="#addWarning" text="Submit" />
+                  <Button fx:id="paneFourRemoveWarningSubmitbtn" layoutX="389.0" layoutY="84.0" mnemonicParsing="false" onMouseClicked="#removeWarning" text="Submit" />
+                  <Label layoutX="38.0" layoutY="130.0" text="Cancel Permit:" />
+                  <TextField fx:id="paneFourCencelName" layoutX="166.0" layoutY="126.0" promptText="Permit Holder Name" />
+                  <Button fx:id="paneFourCancelSubmitbtn" layoutX="326.0" layoutY="126.0" mnemonicParsing="false" onMouseClicked="#cancelPermit" text="Submit" />
+                  <TextField fx:id="paneFourAddVehicleName" layoutX="166.0" layoutY="167.0" promptText="Permit Holder Name" />
+                  <Label layoutX="38.0" layoutY="171.0" text="Add Vehicle To Permit:" />
+                  <TextField fx:id="paneFourAddVehicleReg" layoutX="166.0" layoutY="200.0" promptText="Vechicle Registration" />
+                  <Button fx:id="paneFourAddVehicleSubmitbtn" layoutX="327.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#addVehicleToPermit" text="Submit" />
+                  <TextField fx:id="paneFourRemoveVehicleName" layoutX="166.0" layoutY="244.0" promptText="Permit Holder Name" />
+                  <TextField fx:id="paneFourRemoveVehicleReg" layoutX="166.0" layoutY="278.0" promptText="Vechicle Registration" />
+                  <Button fx:id="paneFourRemoveVehicleSubmitbtn" layoutX="328.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#removeVehicleFromPermit" text="Submit" />
+                  <Label layoutX="38.0" layoutY="248.0" text="Remove Vechicle:" />
+                  <Button fx:id="paneFourStatisEnquiry" layoutX="465.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#statisEnquiry" text="Statis Enquiry" />
+               </children></AnchorPane>
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>
