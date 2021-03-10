@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
@@ -22,13 +23,15 @@ import javafx.scene.paint.Color;
  * @author Cameron Savoury: cas00235
  */
 public class CampusSecurityUIController implements Initializable 
-{   
+{
     //<editor-fold defaultstate="collapsed" desc="Class Instance Variables">
 
     //Class Instance Variables
     private Boolean barrierRaised;
     
     RawDataSanitation RDS = new RawDataSanitation();
+    
+    System_status systStatus = new System_status();
     
     Alert a;
     
@@ -69,32 +72,44 @@ public class CampusSecurityUIController implements Initializable
         private Label P3lbl_barrierLog;
         
         @FXML
-        private TableView<String> P3tbl_barrierLog = new TableView<>();
+        private TextArea P3txtA_barrierLog;
         //</editor-fold>
     
 //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Barrier Control Methods">
     @FXML
-    private boolean raiseBarrier (ActionEvent e)
+    private void raiseBarrier (ActionEvent e)
     {
-        System.out.println("Barrier Raised");
-        P1lbl_dynamicBarrierStatus.setTextFill(Color.GREEN);
-        P1lbl_dynamicBarrierStatus.setText("RAISED");
         barrierRaised = true;
-        System.out.println("\nRaised - " + barrierRaised.toString());
-        return barrierRaised;
+        if(systStatus.setSystemStaus(barrierRaised))
+        {
+            System.out.println("Barrier Raised");
+            P1lbl_dynamicBarrierStatus.setTextFill(Color.GREEN);
+            P1lbl_dynamicBarrierStatus.setText("RAISED");  
+        }
+        else
+        {
+            System.out.println("Error raising barrier");
+            return;
+        }
     }//raiseBarrier
     
     @FXML
-    private boolean lowerBarrier (ActionEvent e)
+    private void lowerBarrier (ActionEvent e)
     {
-        System.out.println("Barrier Lowered");
-        P1lbl_dynamicBarrierStatus.setTextFill(Color.RED);
-        P1lbl_dynamicBarrierStatus.setText("LOWERED");
         barrierRaised = false;
-        System.out.println("\nRaised - " + barrierRaised.toString());
-        return barrierRaised;
+        if(!systStatus.setSystemStaus(barrierRaised))
+        {
+            System.out.println("Barrier Lowered");
+            P1lbl_dynamicBarrierStatus.setTextFill(Color.RED);
+            P1lbl_dynamicBarrierStatus.setText("LOWERED");  
+        }
+        else
+        {
+            System.out.println("Error lowering barrier");
+            return;
+        }
     }//lowerBarrier
 //</editor-fold>
     
@@ -134,7 +149,9 @@ public class CampusSecurityUIController implements Initializable
     @FXML
     private void logChange()
     {
-        //TODO - Add code from system status class
+        systStatus.addToLog(barrierRaised);
+        P3txtA_barrierLog.clear();
+        P3txtA_barrierLog.insertText(0, systStatus.getLog);
     }
 //</editor-fold>
     
