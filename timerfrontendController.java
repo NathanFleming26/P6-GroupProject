@@ -38,7 +38,7 @@ public class timerfrontendController implements Initializable {
     private void BE (ActionEvent e)
     {
         
-   if(dayNumber<366)
+   if(dayNumber<365)
    {
        dayNumber++;
        label2.setText("dayNumber");
