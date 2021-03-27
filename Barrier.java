@@ -20,7 +20,8 @@ import javafx.stage.Stage;
 public class Barrier extends Application{ //implements java.util.Observer{
  
     private int barrierNo, date;
-    private boolean active = false; 
+
+    System_status status;
     //This attribute indicates the active/inactive state of the barrier system - as notified by the system status when it changes (Barrier Observes System status)
     
     //static BarrierFXMLController myController;
@@ -39,7 +40,9 @@ public class Barrier extends Application{ //implements java.util.Observer{
 
         Parent root = FXMLLoader.load(getClass().getResource("BarrierFXML.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("DATE No, Barrier No");
+        status = new System_status();
+        date = status.getDate();
+        stage.setTitle((String.valueOf(date)));
         stage.setScene(scene);
         stage.show();
         
