@@ -36,7 +36,14 @@ abstract public class Permit
     
     public void setPermitHolder(int id, String name)
     {
-        permitHolder.put(id, name);
+        if(permitHolder.containsKey(id))
+        {
+            //TODO - ERROR
+        }
+        else
+        {
+            this.permitHolder.put(id, name);
+        }
     }
 //</editor-fold>
 
@@ -51,9 +58,9 @@ abstract public class Permit
         return noOfEntries;
     }
     
-    public void setNoOfEntries(int noOfEntries)
+    public void addEntry()
     {
-        this.noOfEntries = noOfEntries;
+        this.noOfEntries = noOfEntries + 1;
     }
 //</editor-fold>
 
@@ -67,9 +74,9 @@ abstract public class Permit
         return warnings;
     }
     
-    public void setWarnings(int warnings)
+    public void addWarning()
     {
-        this.warnings = warnings;
+        this.warnings = warnings + 1;
     }
 //</editor-fold>
 
