@@ -19,4 +19,12 @@ public class Day_visitor_permit extends Permit {
      * @directed
      */
     private Date lnkDate;
+
+    public Day_vistor_permit (String permitHolderName, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info v1, Vehicle_info v2, Date lnkDate, String hostName)
+    {
+    	super(permitHolderName, noOfEntries, warnings, suspended, enteredToday, v1, v2);
+    	this.lnkDate = lnkDate;
+    	this.hostName = hostName;
+    }
+    
 }

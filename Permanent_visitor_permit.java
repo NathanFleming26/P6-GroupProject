@@ -5,6 +5,14 @@
  * for issuing a new Permanent visitor permit.
  */
 public class Permanent_visitor_permit extends Permit {
+
+	private Date lnkDate;
+	
+	public Permanent_visitor_permit (String permitHolderName, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info v1, Vehicle v2, Date lnkDate)
+    {
+    	super(permitHolderName, noOfEntries, warnings, suspended, enteredToday, v1, v2);
+    	this.lnkDate = lnkDate;
+    }
 }
 
 
