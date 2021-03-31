@@ -1,13 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package application;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Queue;
@@ -24,99 +14,91 @@ import java.util.Queue;
  *
  * There will only be one instance of this class.
  */
-public class System_status extends Observable 
-{
-    //Date Variables to be used in later methods
-    //Sets up a formatted version of the current system date and time
-    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-    LocalDateTime myDateObj = LocalDateTime.now();
-    
-    /**
-     * This attribute is the central indication of the activity status of the whole barrier
-     * system. It is set/unset by messages from instances of the Campus security class.
-     */
-    private boolean systemActive = true;
-    
-    //Method to change the systemActive boolean to the value passed in the method call from the campus security class
-    public boolean setSystemStatus(boolean changeTo)
-    {
-        systemActive = changeTo;
-        return systemActive;
-    }
+public class System_status extends Observable {
+	/**
+	 * This attribute is the central indication of the activity status of the whole barrier
+	 * system. It is set/unset by messages from instances of the Campus security class.
+	 */
+	private boolean systemActive = false;
+	//Method to change the systemActive boolean to the value passed in the method call from the campus security class
+	public void setSystemStaus(boolean changeTo)
+	{
+		systemActive = changeTo;
+        setChanged();
+        notifyObservers();         // Note: notifies ALL Observing views
+	}
     public boolean getSystemStatus()
     {
         //return systemActive;
         return systemActive;
     }
 
-    /**
-     * A Queue of strings showing recent attempts to pass through the barriers (both successful
-     * and unsuccessful). The last 20 should be enough? These are intended for display on
-     * the Campus_security screens.
-     */
-    private Queue<String> log = new LinkedList<String>();
-    
-    public void addToLog(boolean barrierStatus)
-    {
-        //Initialisation of variables to be used
-        String barrierStatusStr = "";
-        String fullEntry = "";
-        String formattedDate = myDateObj.format(myFormatObj);
-        
-        //Format based on status of the barrier
-        if(barrierStatus && systemActive) //If barrier is already raised
-        {
-            fullEntry = "Attempt to change barrier status to " + barrierStatusStr + "  was made on " + formattedDate + " however the barrier was already " + barrierStatusStr;   
-        }
-        else if (!barrierStatus && !systemActive) //If barrier is already lowered
-        {
-            fullEntry = "Attempt to change barrier status to " + barrierStatusStr + "  was made on " + formattedDate + " however the barrier was already " + barrierStatusStr; 
-        }
-        else if(barrierStatus && !systemActive) //If barrier is already lowered but to be raised
-        {
-            barrierStatusStr = "Raised";
-            fullEntry = "Barrier was " + barrierStatusStr + " on " + formattedDate;
-        }
-        else if(!barrierStatus && systemActive) //If barrier is already raised but to be lowered
-        {
-            
-            barrierStatusStr = "Lowered";
-            fullEntry = "Barrier was " + barrierStatusStr + " on " + formattedDate;
-        }
-        else //Error
-        {
-            System.out.println("Error adding to log");
-            return;
-        }
+	/**
+	 * An array of strings showing recent attempts to pass through the barriers (both successful
+	 * and unsuccessful). The last 20 should be enough? These are intended for display on
+	 * the Campus_security screens.
+	 */
+	private Queue<String> log = new LinkedList<String>();
 
-        if(log.size()<20) //To keep the list only storing the latest 20 entries
-        {
-        log.add(fullEntry);
-        }
-        else
-        {
-            log.remove(); //remove the oldest entry (at the head)
-            log.add(fullEntry); //and then iterate the list
-        }
-    }
-    
-    //Returns the log to be printed in the campus security class
-    private String getLog()
-    {
-        return log.toString();
-    }
+	public void addToLog(boolean barrierStatus)
+	{
+		//Initialisation of variables to be used
+		String barrierStatusStr = "";
+		String fullEntry = "";
+		int date = 1;
+		//String formattedDate = myDateObj.format(myFormatObj);
 
-    /**
-     * This attribute is kept up to date by the Timer.
-     * @clientCardinality 1
-     * @supplierCardinality 1
-     * @link aggregation
-     * @label Contains
-     * @directed
-     */
-    private Date today;
-    public int getDate(){
-        return 363;
-    }
-    //TODO
+		//Format based on status of the barrier
+		if(barrierStatus && systemActive) //If barrier is already raised
+		{
+			barrierStatusStr = "Raised";
+			fullEntry = "Attempt to change barrier status to " + barrierStatusStr + "  was made on " + date + " however the barrier was already " + barrierStatusStr +"\n";   
+		}
+		else if (!barrierStatus && !systemActive) //If barrier is already lowered
+		{
+			barrierStatusStr = "Lowered";
+			fullEntry = "Attempt to change barrier status to " + barrierStatusStr + "  was made on " + date + " however the barrier was already " + barrierStatusStr+"\n"; 
+		}
+		else if(barrierStatus && !systemActive) //If barrier is already lowered but to be raised
+		{
+			barrierStatusStr = "Raised";
+			fullEntry = "Barrier was " + barrierStatusStr + " on " + date+"\n";
+		}
+		else if(!barrierStatus && systemActive) //If barrier is already raised but to be lowered
+		{
+
+			barrierStatusStr = "Lowered";
+			fullEntry = "Barrier was " + barrierStatusStr + " on " + date+"\n";
+		}
+		else //Error
+		{
+			System.out.println("Error adding to log \n");
+			return;
+		}
+
+		if(log.size()<20) //To keep the list only storing the latest 20 entries
+		{
+			log.add(fullEntry);
+		}
+		else
+		{
+			log.remove(); //remove the oldest entry (at the head)
+			log.add(fullEntry); //and then iterate the list
+		}
+	}
+
+	public String getLog()
+	{
+		return log.toString();
+	}
+
+	/**
+	 * This attribute is kept up to date by the Timer.
+	 * @clientCardinality 1
+	 * @supplierCardinality 1
+	 * @link aggregation
+	 * @label Contains
+	 * @directed
+	 */
+	private Date today;
 }

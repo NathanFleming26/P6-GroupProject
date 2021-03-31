@@ -28,6 +28,6 @@ public class Main {
           // Repeat for as many campus security screens as required
 
         Administration_office adminOffice1 = new Administration_office(systemStatus, vehicleList, permitList);  // Frame, boundary class
-          // Repeat for as many admin office screens as required
+        // Repeat for as many admin office screens as required
     } // main
 }
