@@ -28,6 +28,7 @@ abstract public class Permit
 {  
     //<editor-fold defaultstate="collapsed" desc="permitType">
     private int permitType;
+    private String permitHolder;
     
     /*
         Day Visitor Permit - 1
@@ -48,12 +49,8 @@ abstract public class Permit
 //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="UID">
-    private int UID;
+
     
-    public int getUID()
-    {
-        return UID;
-    }
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="regNo">
@@ -69,7 +66,7 @@ abstract public class Permit
     /**
      * The name of the permit holder (Stored in a hashtable and retrieved and st using a unique ID (int))
      */
-    private String permitHolder;
+
 
     public String getPermitHolder()
     {
@@ -193,9 +190,9 @@ abstract public class Permit
     }
 //</editor-fold>
     
-    public Permit(int UID, int permitType, String permitHolderName, String regNo, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Hashtable permittedVehicles)//Permit constructor when making a new permit
+    public Permit(String permitHolder, int permitType, String regNo, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Hashtable permittedVehicles)//Permit constructor when making a new permit
     {
-        this.permitHolder = permitHolderName;
+        this.permitHolder = permitHolder;
         
         this.regNo = regNo;
         

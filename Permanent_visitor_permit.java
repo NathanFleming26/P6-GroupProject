@@ -15,9 +15,9 @@ public class Permanent_visitor_permit extends Permit
 {
     private int lnkDate;
     
-    public Permanent_visitor_permit(int UID, int permitType, String permitHolderName, String regNo, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info v1, Hashtable permittedVehicles, int lnkDate)
+    public Permanent_visitor_permit(String permitHolder, int permitType, String regNo, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info v1, Hashtable permittedVehicles, int lnkDate)
     {
-        super(UID, permitType, permitHolderName, regNo, noOfEntries, warnings, suspended, enteredToday, v1, permittedVehicles);
+        super(permitHolder, permitType, regNo, noOfEntries, warnings, suspended, enteredToday, v1, permittedVehicles);
         this.lnkDate = lnkDate;
     }
 }

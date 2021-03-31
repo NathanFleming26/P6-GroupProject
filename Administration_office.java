@@ -65,6 +65,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
      * @directed
      */
     private System_status lnkSystem_status;
+    private int date=1;
     
     private JButton btn1, btn2, btn3, btn4, btn5, btn6;
     private JLabel lblName, lblReg, lblReg2, lblReg3, lblReg4,lblReg5, 
@@ -83,7 +84,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
     	lnkVehicle_list = v;
     	lnkPermit_list = p;
     	
-    	setTitle("Administation Office   Date: ");
+    	setTitle("Administation Office   " + date);
         setLocation(40,200);
         setSize(450,350);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -233,12 +234,17 @@ public class Administration_office extends JFrame implements Observer, ActionLis
         
         window.add(tab);
         setVisible(true);
+        lnkSystem_status.addObserver(this);
     }
     
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		date = lnkSystem_status.getDate();
+    	setTitle("Administration Office  " + date);
+        System.out.println("Admin updated");
+	
 		
 	}
 

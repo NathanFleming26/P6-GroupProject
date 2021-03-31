@@ -37,9 +37,9 @@ public class Regular_visitor_permit extends Permit {
      */
     private int lnkDate1;
     
-    public Regular_visitor_permit(int UID, int permitType, String permitHolderName, String regNo, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info v1, Hashtable permittedVehicles, int lnkDate, int lnkDate1, String hostName)
+    public Regular_visitor_permit(String  permitHolder, int permitType, String regNo, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info v1, Hashtable permittedVehicles, int lnkDate, int lnkDate1, String hostName)
     {
-        super(UID, permitType, permitHolderName, regNo, noOfEntries, warnings, suspended, enteredToday, v1, permittedVehicles);
+        super(permitHolder, permitType, regNo, noOfEntries, warnings, suspended, enteredToday, v1, permittedVehicles);
         this.lnkDate = lnkDate;
         this.lnkDate1 = lnkDate1;
         this.hostName = hostName;

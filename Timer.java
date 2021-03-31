@@ -88,6 +88,8 @@ public class Timer extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==update) {			//Increment day
 			date = today.increment();
+			System_status s = new System_status();
+			s.UpdateDate(date);
 			lblDate.setText("Date: " + date);	
 		}
 		// TODO Auto-generated method stub

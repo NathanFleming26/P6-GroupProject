@@ -62,7 +62,8 @@ public class Barrier extends JFrame implements Observer, ActionListener {
      * system status when it changes (Barrier Observes System status). If false then the barrier must be up.
      * If true then the barrier position is determined by attribute raised.
      */
-    private boolean active = false;
+    private boolean active = false;    
+    private int date=1;
 
     /**
      * If the barrier system is active, this attribute indicates whether the barrier is currently in
@@ -78,7 +79,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
     	lnkSystem_status = s;
     	lnkVehicle_list = v;
     	
-    	setTitle("Barrier");
+    	setTitle("Barrier  " + date);
         setLocation(40,200);
         setSize(350,150);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -112,7 +113,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 	        String reg = txtReg.getText();                     //Get reg from input text box
 //	        valid = lnkVehicle_list.checkVehicle(reg); 
 	        System.out.println(active);
-	        if (lnkVehicle_list.getVehicle(reg).getPermit()) {
+	        if (lnkVehicle_list.getVehicle(reg).hasPermit()) {
 	        	raised = true;
 	        }else {
 	        	raised = false;
@@ -134,5 +135,8 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 	@Override
 	public void update(Observable o, Object arg) {
 		active = lnkSystem_status.getSystemStatus();
+		date = lnkSystem_status.getDate();
+    	setTitle("Barrier  " + date);
+        System.out.println("Barrier updated");
 	}
 }

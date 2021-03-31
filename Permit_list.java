@@ -36,7 +36,7 @@ public class Permit_list
     private Hashtable permitted;
     
     //Stores the UID to assign to new permits
-    private int UID = 1;
+    //private int UID = 1;
     
     //Class delcerations to use when dealing with permits
     Date d1 = new Date();
@@ -46,7 +46,7 @@ public class Permit_list
     public Permit_list() 
     {
 //        //Initialise and populate hashtable
-//        lnkPermit = new Hashtable();
+        lnkPermit = new Hashtable();
 //
 //        University_member_permit p1 = new University_member_permit(UID, 2, "Cameron Savoury", VI2.getReg(), 0, 0, false, false, VI2.enteredToday(VI.getReg()), VI2.permittedVehicles(VI2.getReg(), UID), d1.getDayNumber());
 //        lnkPermit.put(UID, p1);
@@ -80,8 +80,8 @@ public class Permit_list
 //        lnkPermit.put(p3.getUID(), p3);
 //        newUID();
     }
-    //Returns a hashtable where all of the vehicles link to the entered permitId
-  public Hashtable permittedVehicles(String regNo, int permitId)
+//    Returns a hashtable where all of the vehicles link to the entered permitId
+  public Hashtable permittedVehicles(String regNo, String permitHolder)
   {
       Set<String> permits = lnkPermit.keySet();
       Iterator<String> iterator = permits.iterator();
@@ -89,11 +89,8 @@ public class Permit_list
       while (iterator.hasNext()) 
       {
           String key = iterator.next();
-          Vehicle_info v = getVehicle;
-          if(vehicles.containsValue(p.getUID() == permitId))
-          {
-              permitted.put(regNo, permitId);
-          }
+          Permit p = (Permit) lnkPermit.get(key);
+          permitted = p.getPermittedVehicles();
       }
       
       return permitted;
@@ -110,34 +107,30 @@ public class Permit_list
         {
             //Day Visitor Permit
             case 1:
-                Day_visitor_permit DVP = new Day_visitor_permit(UID, 1, permitHolder, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), UID), d1.getDayNumber(), hostName);
-                lnkPermit.put(UID, DVP);
+                Day_visitor_permit DVP = new Day_visitor_permit(permitHolder, 1, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber(), hostName);
+                lnkPermit.put(permitHolder, DVP);
                 v.setPermit(DVP);
-                newUID();
                 addedSuccessfully = true;
                 break;
             //University Member Permit
             case 2:
-                University_member_permit UMP = new University_member_permit(UID, 2, permitHolder, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), UID), d1.getDayNumber());
-                lnkPermit.put(UID, UMP);
+                University_member_permit UMP = new University_member_permit(permitHolder, 2, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber());
+                lnkPermit.put(permitHolder, UMP);
                 v.setPermit(UMP);
-                newUID();
                 addedSuccessfully = true;
                 break;
             //Regular Visitor Permit
             case 3:
-                Regular_visitor_permit RVP = new Regular_visitor_permit(UID, 3, permitHolder, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), UID), d1.getDayNumber(), (d1.getDayNumber()+lengthOfStay), hostName);
-                lnkPermit.put(UID, RVP);
+                Regular_visitor_permit RVP = new Regular_visitor_permit(permitHolder, 3, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber(), (d1.getDayNumber()+lengthOfStay), hostName);
+                lnkPermit.put(permitHolder, RVP);
                 v.setPermit(RVP);
-                newUID();
                 addedSuccessfully = true;
                 break;
             //Permanent Visitor Permit
             case 4:
-                Permanent_visitor_permit PVP = new Permanent_visitor_permit(UID, 4, permitHolder, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), UID), d1.getDayNumber());
-                lnkPermit.put(UID, PVP);
+                Permanent_visitor_permit PVP = new Permanent_visitor_permit(permitHolder, 4, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber());
+                lnkPermit.put(permitHolder, PVP);
                 v.setPermit(PVP);
-                newUID();
                 addedSuccessfully = true;
                 break;
         }
@@ -153,8 +146,7 @@ public class Permit_list
         while (iterator.hasNext()) {
             String key = iterator.next();
             Permit p = (Permit) lnkPermit.get(key);
-            System.out.println( "\nPermit ID: " + p.getUID() + 
-                                "\nPermit Holder: " + p.getPermitHolder() + 
+            System.out.println("\nPermit Holder: " + p.getPermitHolder() + 
                                 "\nNo of Entries: " + p.getNoOfEntries() +
                                 "\nWarnings: " + p.getWarnings() +  
                                 "\nSuspended: " + p.isSuspended() +
@@ -178,19 +170,5 @@ public class Permit_list
         return removedSuccessfully;
     }
         
-     
-     public int newUID()
-     {
-         if(lnkPermit.containsKey(UID))
-         {
-             UID = UID + 1;
-         }
-         else
-         {
-             return UID;
-         }
-         
-         return UID;
-     }
             
 }

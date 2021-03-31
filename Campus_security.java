@@ -40,6 +40,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
      */
     private Vehicle_list lnkVehicle_list;
     private boolean active = false;
+    private int date=1;
 
     /**
      * Each instance of Campus_security has a navigable association to the system status so that it
@@ -61,7 +62,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
     	lnkVehicle_list = v;
 
     	
-    	setTitle("Campus Security	Date: ");
+    	setTitle("Campus Security	" + date );
         setLocation(40,200);
         setSize(600,600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -84,7 +85,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
         log = new JButton("Check Log");
         log.addActionListener(this);
         window.add(log);
-        txtInfo = new JTextArea("Todays Date: ", 20, 50);
+        txtInfo = new JTextArea("Todays Date: " + date, 20, 50);
         window.add(txtInfo, BorderLayout.CENTER);
         
         lnkSystem_status.addObserver(this);
@@ -95,7 +96,12 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 
 	@Override
 	public void update(Observable o, Object arg) {
-		active = lnkSystem_status.getSystemStatus();		
+		active = lnkSystem_status.getSystemStatus();
+		date = lnkSystem_status.getDate();
+    	setTitle("Barrier  " + date);
+    	txtInfo.setText("");
+    	txtInfo.setText("Todays Date: " + date);
+    	System.out.println("Campus updated");
 	}
 
 

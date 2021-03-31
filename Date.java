@@ -28,6 +28,7 @@ public class Date {
 		if(dayNumber<365)
 		{
 			dayNumber++;
+		
 		}else
 		{
 			dayNumber=1;

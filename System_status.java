@@ -20,12 +20,20 @@ public class System_status extends Observable {
 	 * system. It is set/unset by messages from instances of the Campus security class.
 	 */
 	private boolean systemActive = false;
+    private int date=1;
 	//Method to change the systemActive boolean to the value passed in the method call from the campus security class
 	public void setSystemStaus(boolean changeTo)
 	{
 		systemActive = changeTo;
         setChanged();
         notifyObservers();         // Note: notifies ALL Observing views
+        this.date = date;
+	}
+	public void UpdateDate(int date) {
+		this.date = date;
+        System.out.println("Sys updated");
+        setChanged();
+        notifyObservers();
 	}
     public boolean getSystemStatus()
     {
@@ -85,6 +93,11 @@ public class System_status extends Observable {
 			log.remove(); //remove the oldest entry (at the head)
 			log.add(fullEntry); //and then iterate the list
 		}
+	}
+	
+
+	public int getDate() {
+		return date;
 	}
 
 	public String getLog()
