@@ -64,7 +64,7 @@ public class Timer extends JFrame implements ActionListener {
     private JLabel lblDate;
     int date;
     
-    //Create the UI for timer
+
     public Timer(System_status s, Permit_list p) {
     	today = new Date();
     	lnkSystem_status = s;
@@ -88,14 +88,16 @@ public class Timer extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		if (e.getSource()==update) {			//If update button is pressed
 			date = today.increment();
 			//method to delete day visitors
 			lnkPermit_list.removeDayVisitors();
 			lnkSystem_status.UpdateDate(date);
-			lblDate.setText("Date: " + date);	
+      lblDate.setText("Date: " + date);
+			
 		}
-		// TODO Auto-generated method stub
+
 		
 	}
 }
