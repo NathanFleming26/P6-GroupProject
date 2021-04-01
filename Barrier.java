@@ -83,7 +83,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		lnkVehicle_list = v;
 
 		setTitle("Barrier  " + date);
-		setLocation(40,200);
+		setLocation(600,200);
 		setSize(350,150);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Container window = getContentPane();
@@ -136,7 +136,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 							raised = true;
 							// Popup Message
 							v.addAccess();
-							showMessageDialog(null, "The barrier has been lowered", "Barrier Status", JOptionPane.INFORMATION_MESSAGE);
+							showMessageDialog(null, "The barrier has been raised", "Barrier Status", JOptionPane.INFORMATION_MESSAGE);
 							lblStatus2.setText("GO");
 							lblStatus2.setForeground(Color.green);
 						}else {//Do not raise the barrier

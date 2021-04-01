@@ -64,7 +64,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 
 
 		setTitle("Campus Security	" + date );
-		setLocation(40,200);
+		setLocation(600,600);
 		setSize(600,600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Container window = getContentPane();
