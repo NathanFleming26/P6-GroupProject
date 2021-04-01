@@ -23,10 +23,15 @@ public class University_member_permit extends Permit
      * @directed
      */
     private int lnkDate;
+    //private int permitType;
+
+
 
     public University_member_permit(String  permitHolder, int permitType, String regNo, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info v1, Hashtable permittedVehicles, int lnkDate)
     {
         super(permitHolder, permitType, regNo, noOfEntries, warnings, suspended, enteredToday, v1, permittedVehicles);
         this.lnkDate = lnkDate;
+        super.permitType = permitType;
+
     }
 }

@@ -23,10 +23,13 @@ public class Day_visitor_permit extends Permit
      */
     private int lnkDate;
     
+    //Overloaded Constructor
+
     public Day_visitor_permit(String permitHolder, int permitType, String regNo, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info v1, Hashtable permittedVehicles, int lnkDate, String hostName)
     {
         super(permitHolder, permitType, regNo, noOfEntries, warnings, suspended, enteredToday, v1, permittedVehicles);
         this.lnkDate = lnkDate;
+
         this.hostName = hostName;
     }
 }

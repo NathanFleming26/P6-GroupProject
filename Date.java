@@ -35,6 +35,7 @@ public class Date {
 		}
 		return dayNumber;
 	}
+
 	public int getDayNumber() {
 		return dayNumber;
 	}

@@ -27,6 +27,9 @@ public class Regular_visitor_permit extends Permit {
      */
     private int lnkDate;
 
+    private int permitType;
+
+
     /**
      * The date that the visit ends - entry will not be allowed after this date.
      * @label Ending on
@@ -36,12 +39,15 @@ public class Regular_visitor_permit extends Permit {
      * @directed
      */
     private int lnkDate1;
-    
+
+    //Overloaded Constructor
     public Regular_visitor_permit(String  permitHolder, int permitType, String regNo, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info v1, Hashtable permittedVehicles, int lnkDate, int lnkDate1, String hostName)
     {
         super(permitHolder, permitType, regNo, noOfEntries, warnings, suspended, enteredToday, v1, permittedVehicles);
         this.lnkDate = lnkDate;
         this.lnkDate1 = lnkDate1;
-        this.hostName = hostName;
+
+        super.permitType = permitType;
+        super.setHostName(hostName);
     }
 }
