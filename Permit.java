@@ -27,8 +27,11 @@ import java.util.Hashtable;
 abstract public class Permit
 {  
     //<editor-fold defaultstate="collapsed" desc="permitType">
-    private int permitType;
-    private String permitHolder;
+    //Instance Variables with Getters and Setters
+	public int permitType;
+    private String permitHolder, hostName;
+    private Vehicle_info v;
+    
     
     /*
         Day Visitor Permit - 1
@@ -45,6 +48,12 @@ abstract public class Permit
     public void setPermitType(int permitType)
     {
         this.permitType = permitType;
+    }
+    public String getHostName() {
+    	return hostName;
+    }
+    public void setHostName(String h) {
+    	hostName = h;
     }
 //</editor-fold>
     
@@ -141,6 +150,16 @@ abstract public class Permit
         return enteredToday;
     }
     
+    public void setVehicle(Vehicle_info v) {
+    	this.v=v;
+    }
+    public Vehicle_info getVehicle() {
+    	return v;
+    }
+    public void deleteVehicle() {
+    	v=null;
+    }
+    
     public void setEnteredToday(boolean enteredToday)
     {
         this.enteredToday = enteredToday;
@@ -190,6 +209,7 @@ abstract public class Permit
     }
 //</editor-fold>
     
+    //constructor
     public Permit(String permitHolder, int permitType, String regNo, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Hashtable permittedVehicles)//Permit constructor when making a new permit
     {
         this.permitHolder = permitHolder;
