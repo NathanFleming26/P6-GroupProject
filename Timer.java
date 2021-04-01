@@ -58,18 +58,20 @@ public class Timer extends JFrame implements ActionListener {
      * @label Contains
      * @directed
      */
+  //Instance Variables
     private Date today;
     private JButton update;
     private JLabel lblDate;
     int date;
     
+
     public Timer(System_status s, Permit_list p) {
     	today = new Date();
     	lnkSystem_status = s;
     	lnkPermit_list = p;
     	
     	setTitle("Timer");
-        setLocation(40,200);
+        setLocation(40,600);
         setSize(350,150);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         Container window = getContentPane();
@@ -86,13 +88,16 @@ public class Timer extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource()==update) {			//Increment day
+
+		if (e.getSource()==update) {			//If update button is pressed
 			date = today.increment();
-			System_status s = new System_status();
-			s.UpdateDate(date);
-			lblDate.setText("Date: " + date);	
+			//method to delete day visitors
+			lnkPermit_list.removeDayVisitors();
+			lnkSystem_status.UpdateDate(date);
+      lblDate.setText("Date: " + date);
+			
 		}
-		// TODO Auto-generated method stub
+
 		
 	}
 }

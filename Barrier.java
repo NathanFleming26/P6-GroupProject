@@ -83,7 +83,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		lnkVehicle_list = v;
 
 		setTitle("Barrier  " + date);
-		setLocation(40,200);
+		setLocation(600,200);
 		setSize(350,150);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Container window = getContentPane();
