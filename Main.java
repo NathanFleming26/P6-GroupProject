@@ -15,6 +15,7 @@ public class Main {
      * They are presumed to put themselves on display, and register as Observers as necessary.
      */
     public static void main(String[] args) {
+    	//Instantiate classes required for later use
         System_status systemStatus = new System_status();
         Vehicle_list vehicleList = new Vehicle_list();
         Permit_list permitList = new Permit_list();
@@ -22,12 +23,13 @@ public class Main {
         Timer timer = new Timer(systemStatus, permitList);     // Frame, boundary class
 
         Barrier barrier1 = new Barrier(systemStatus, vehicleList);  // Frame, boundary class
+        Barrier barrier2 =  new Barrier(systemStatus, vehicleList);
           // Repeat for as many barriers as required
 
         Campus_security campusSecurity1 = new Campus_security(systemStatus, vehicleList);  // Frame, boundary class
           // Repeat for as many campus security screens as required
 
         Administration_office adminOffice1 = new Administration_office(systemStatus, vehicleList, permitList);  // Frame, boundary class
-          // Repeat for as many admin office screens as required
+        // Repeat for as many admin office screens as required
     } // main
 }
