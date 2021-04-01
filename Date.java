@@ -21,14 +21,27 @@
  * academic year, and comparing dates within the year for equal, before and after.
  */
 public class Date {
-    /**
-     * This operation adds one to the day number, wrapping round to 1 after 365 automatically.
-     */
-    public void increment() {
-    }
+	/**
+	 * This operation adds one to the day number, wrapping round to 1 after 365 automatically.
+	 */
+	public int increment() {
+		if(dayNumber<365)
+		{
+			dayNumber++;
+		
+		}else
+		{
+			dayNumber=1;
+		}
+		return dayNumber;
+	}
+	//Returns the value of the dayNumber variable
+	public int getDayNumber() {
+		return dayNumber;
+	}
 
-    /**
-     * For simplicity, dates will be represented just by an integer in the range 1-365. No Leap years!
-     */
-    private int dayNumber;
+	/**
+	 * For simplicity, dates will be represented just by an integer in the range 1-365. No Leap years!
+	 */
+	private int dayNumber=1;
 }
