@@ -162,7 +162,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		{
 			if (raised==true) {
 				raised = false;
-				showMessageDialog(null, "Vehicle has cleared barrier, barrier lowered", "Barrier Status", JOptionPane.INFORMATION_MESSAGE);
+				showMessageDialog(null, "Vehicle has cleared barrier, barrier raised", "Barrier Status", JOptionPane.INFORMATION_MESSAGE);
 				lblStatus2.setText("STOP");
 				lblStatus2.setForeground(Color.red);
 				//Clear all fields
