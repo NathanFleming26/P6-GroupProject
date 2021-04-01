@@ -25,15 +25,19 @@ public class System_status extends Observable {
 	public void setSystemStaus(boolean changeTo)
 	{
 		systemActive = changeTo;
-        setChanged();
-        notifyObservers();         // Note: notifies ALL Observing views
-        this.date = date;
+        //method signalling a change to system
+		change();
+
 	}
 	public void UpdateDate(int date) {
 		this.date = date;
-        System.out.println("Sys updated");
-        setChanged();
-        notifyObservers();
+        //method signalling a change to system
+        change();
+	}
+    //This method will update date, or status
+	public void change() {
+		setChanged();
+        notifyObservers();       // Note: notifies ALL Observing views
 	}
     public boolean getSystemStatus()
     {
@@ -48,11 +52,13 @@ public class System_status extends Observable {
 	 */
 	private Queue<String> log = new LinkedList<String>();
 
+	 //Method adds instances of the barrier changing to a log
 	public void addToLog(boolean barrierStatus)
 	{
 		//Initialisation of variables to be used
 		String barrierStatusStr = "";
 		String fullEntry = "";
+        //This variable stores the date to be displayed
 		int date = 1;
 		//String formattedDate = myDateObj.format(myFormatObj);
 
@@ -95,11 +101,11 @@ public class System_status extends Observable {
 		}
 	}
 	
-
+	//Returns the date value
 	public int getDate() {
 		return date;
 	}
-
+	//Returns a string representation of the log
 	public String getLog()
 	{
 		return log.toString();

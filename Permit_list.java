@@ -21,154 +21,165 @@ import java.util.Set;
  */
 public class Permit_list 
 {
-    /** The Permit list maintains a collection of the Permits currently issued.
-     *
-     * This association must be implemented by an attribute holding a collection data structure (for
-     * example: array, hash table - the latter is recommended).
-     *
-     * Note that no two Permits may have the same permit holder name (this information is not represented diagrammatically).
-     * @associates Permit
-     * @label Contains
-     * @clientCardinality 1
-     * @supplierCardinality 0..*
-     * @directed*/
-    private Hashtable lnkPermit;
-    private Hashtable permitted;
-    
-    //Stores the UID to assign to new permits
-    //private int UID = 1;
-    
-    //Class delcerations to use when dealing with permits
-    Date d1 = new Date();
-    //Vehicle_info VI;
-    //Vehicle_info VI2 = new Vehicle_info("SE17 QPR");
-    
-    public Permit_list() 
-    {
-//        //Initialise and populate hashtable
-        lnkPermit = new Hashtable();
-//
-//        University_member_permit p1 = new University_member_permit(UID, 2, "Cameron Savoury", VI2.getReg(), 0, 0, false, false, VI2.enteredToday(VI.getReg()), VI2.permittedVehicles(VI2.getReg(), UID), d1.getDayNumber());
-//        lnkPermit.put(UID, p1);
-//        newUID();
-//
-//        Day_visitor_permit p2 = new Day_visitor_permit(UID, 1, "Bruce Spence", VI2.getReg(), 0, 0, false, false, VI2.enteredToday(VI2.getReg()), VI2.permittedVehicles(VI2.getReg(), UID), d1.getDayNumber(), "Nathan Fleming");
-//        lnkPermit.put(UID, p2);
-//        newUID();
-//
-//        Permanent_visitor_permit p3 = new Permanent_visitor_permit(UID, 4, "Cameron Savoury", VI2.getReg(), 0, 0, false, false, VI2.enteredToday(VI2.getReg()), VI2.permittedVehicles(VI2.getReg(), UID), d1.getDayNumber());
-//        lnkPermit.put(p3.getUID(), p3);
-//        newUID();
-    }
-    
-    public Permit_list(Vehicle_list v) 
-    {
+	/** The Permit list maintains a collection of the Permits currently issued.
+	 *
+	 * This association must be implemented by an attribute holding a collection data structure (for
+	 * example: array, hash table - the latter is recommended).
+	 *
+	 * Note that no two Permits may have the same permit holder name (this information is not represented diagrammatically).
+	 * @associates Permit
+	 * @label Contains
+	 * @clientCardinality 1
+	 * @supplierCardinality 0..*
+	 * @directed*/
+	private Hashtable lnkPermit;
+	private Hashtable permitted;
 
-//       
-//        //Initialise and populate hashtable
-//        lnkPermit = new Hashtable();
-//
-//        University_member_permit p1 = new University_member_permit(UID, 2, "Cameron Savoury", VI2.getReg(), 0, 0, false, false, VI2.enteredToday(VI.getReg()), VI2.permittedVehicles(VI2.getReg(), UID), d1.getDayNumber());
-//        lnkPermit.put(UID, p1);
-//        newUID();
-//
-//        Day_visitor_permit p2 = new Day_visitor_permit(UID, 1, "Bruce Spence", VI2.getReg(), 0, 0, false, false, VI2.enteredToday(VI2.getReg()), VI2.permittedVehicles(VI2.getReg(), UID), d1.getDayNumber(), "Nathan Fleming");
-//        lnkPermit.put(UID, p2);
-//        newUID();
-//
-//        Permanent_visitor_permit p3 = new Permanent_visitor_permit(UID, 4, "Cameron Savoury", VI2.getReg(), 0, 0, false, false, VI2.enteredToday(VI2.getReg()), VI2.permittedVehicles(VI2.getReg(), UID), d1.getDayNumber());
-//        lnkPermit.put(p3.getUID(), p3);
-//        newUID();
-    }
-//    Returns a hashtable where all of the vehicles link to the entered permitId
-  public Hashtable permittedVehicles(String regNo, String permitHolder)
-  {
-      Set<String> permits = lnkPermit.keySet();
-      Iterator<String> iterator = permits.iterator();
-      
-      while (iterator.hasNext()) 
-      {
-          String key = iterator.next();
-          Permit p = (Permit) lnkPermit.get(key);
-          permitted = p.getPermittedVehicles();
-      }
-      
-      return permitted;
-  }
-    
-     public boolean addPermit(int permitType, String permitHolder, String hostName, int lengthOfStay, Vehicle_info v) 
-     {  
-        //newUID(); //Ensure the UID to be used will not alredy exist in the table
-        
-        boolean addedSuccessfully = false; //Returns true if the permit was added and false if not
-        
-        //Add permit to hash table
-        switch(permitType)
-        {
-            //Day Visitor Permit
-            case 1:
-                Day_visitor_permit DVP = new Day_visitor_permit(permitHolder, 1, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber(), hostName);
-                lnkPermit.put(permitHolder, DVP);
-                v.setPermit(DVP);
-                addedSuccessfully = true;
-                break;
-            //University Member Permit
-            case 2:
-                University_member_permit UMP = new University_member_permit(permitHolder, 2, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber());
-                lnkPermit.put(permitHolder, UMP);
-                v.setPermit(UMP);
-                addedSuccessfully = true;
-                break;
-            //Regular Visitor Permit
-            case 3:
-                Regular_visitor_permit RVP = new Regular_visitor_permit(permitHolder, 3, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber(), (d1.getDayNumber()+lengthOfStay), hostName);
-                lnkPermit.put(permitHolder, RVP);
-                v.setPermit(RVP);
-                addedSuccessfully = true;
-                break;
-            //Permanent Visitor Permit
-            case 4:
-                Permanent_visitor_permit PVP = new Permanent_visitor_permit(permitHolder, 4, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber());
-                lnkPermit.put(permitHolder, PVP);
-                v.setPermit(PVP);
-                addedSuccessfully = true;
-                break;
-        }
-        
-        return addedSuccessfully;
-     }
-     
-     public void details() //Prints all of the detils of the permits currently stored in the hashTable
-     {
-        Set<String> permits = lnkPermit.keySet();
-        Iterator<String> iterator = permits.iterator();
+	//Stores the UID to assign to new permits
+	//private int UID = 1;
 
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-            Permit p = (Permit) lnkPermit.get(key);
-            System.out.println("\nPermit Holder: " + p.getPermitHolder() + 
-                                "\nNo of Entries: " + p.getNoOfEntries() +
-                                "\nWarnings: " + p.getWarnings() +  
-                                "\nSuspended: " + p.isSuspended() +
-                                "\nEntered Today: " + p.isEnteredToday() +
-                                "\nRegistered Vehicles: " + p.getPermittedVehicles() +
-                                "\n");
-        }
-    }
-     
-    public boolean removePermit(int UID)
-    {
-        boolean removedSuccessfully = false;
-        
-        //Check the permit exists
-        if(lnkPermit.containsKey(UID))
-        {
-            lnkPermit.remove(UID); //Removes it from the list
-            removedSuccessfully = true;
-        }
-        
-        return removedSuccessfully;
-    }
-        
-            
+	//Class delcerations to use when dealing with permits
+	Date d1 = new Date();
+	//Vehicle_info VI;
+	//Vehicle_info VI2 = new Vehicle_info("SE17 QPR");
+
+	public Permit_list() 
+	{
+		//        //Initialise and populate hashtable
+		lnkPermit = new Hashtable();
+
+	}
+	//    Returns a hashtable where all of the vehicles link to the entered permitId
+	public Hashtable permittedVehicles(String regNo, String permitHolder)
+	{
+		Set<String> permits = lnkPermit.keySet();
+		Iterator<String> iterator = permits.iterator();
+
+		while (iterator.hasNext()) //Iterate through the collection until there is a match and add it to the hashtable
+		{
+			String key = iterator.next();
+			Permit p = (Permit) lnkPermit.get(key);
+			permitted = p.getPermittedVehicles();
+		}
+
+		return permitted;
+	}
+
+	//Creates new permits using passed in parameters and adds them to the hashtable
+	public boolean addPermit(int permitType, String permitHolder, String hostName, int lengthOfStay, Vehicle_info v) 
+	{  
+
+		boolean addedSuccessfully = false; //Returns true if the permit was added and false if not
+
+		//Add permit to hash table
+		switch(permitType)
+		{
+		//Day Visitor Permit
+		case 1:
+			Day_visitor_permit DVP = new Day_visitor_permit(permitHolder, 1, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber(), hostName);
+			lnkPermit.put(permitHolder, DVP);
+			v.setPermit(DVP);
+			DVP.setVehicle(v);
+			addedSuccessfully = true;
+			break;
+			//University Member Permit
+		case 2:
+			University_member_permit UMP = new University_member_permit(permitHolder, 2, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber());
+			lnkPermit.put(permitHolder, UMP);
+			v.setPermit(UMP);
+			UMP.setVehicle(v);
+			addedSuccessfully = true;
+			break;
+			//Regular Visitor Permit
+		case 3:
+			Regular_visitor_permit RVP = new Regular_visitor_permit(permitHolder, 3, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber(), (d1.getDayNumber()+lengthOfStay), hostName);
+			lnkPermit.put(permitHolder, RVP);
+			v.setPermit(RVP);
+			RVP.setVehicle(v);
+			addedSuccessfully = true;
+			break;
+			//Permanent Visitor Permit
+		case 4:
+			Permanent_visitor_permit PVP = new Permanent_visitor_permit(permitHolder, 4, v.getReg(), 0, 0, false, false, v, permittedVehicles(v.getReg(), permitHolder), d1.getDayNumber());
+			lnkPermit.put(permitHolder, PVP);
+			v.setPermit(PVP);
+			PVP.setVehicle(v);
+			addedSuccessfully = true;
+			break;
+		}
+
+		return addedSuccessfully;
+	}
+
+	public void details() //Prints all of the detils of the permits currently stored in the hashTable, for debugging purposes
+	{
+		Set<String> permits = lnkPermit.keySet();
+		Iterator<String> iterator = permits.iterator();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			Permit p = (Permit) lnkPermit.get(key);
+			System.out.println("\nPermit Holder: " + p.getPermitHolder() + 
+					"\nNo of Entries: " + p.getNoOfEntries() +
+					"\nWarnings: " + p.getWarnings() +  
+					"\nSuspended: " + p.isSuspended() +
+					"\nEntered Today: " + p.isEnteredToday() +
+					"\nRegistered Vehicles: " + p.getPermittedVehicles() +
+					"\n");
+		}
+	}
+	public void removeDayVisitors( ) {//Removes visitors if length of stay = 1 (1 day)
+		Set<String> permits = lnkPermit.keySet();
+		Iterator<String> iterator = permits.iterator();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			Permit p = (Permit) lnkPermit.get(key);
+			//         	 Vehicle_info v = p.getVehicle();
+			int type = p.getPermitType();
+			if(type==1) {
+				removePermit(key);
+				//            	 p.deleteVehicle();
+				//             	 v.deletePermit();
+			}
+		}
+	}
+
+	public boolean removePermit(String UID)//Removes permit using the Unique Identifier of Permit Holder as the key
+	{
+		boolean removedSuccessfully = false;
+
+		//Check the permit exists
+		if(lnkPermit.containsKey(UID))
+		{
+			Permit p = (Permit) lnkPermit.get(UID);
+			Vehicle_info v = p.getVehicle();
+			p.deleteVehicle();
+			v.deletePermit();
+			lnkPermit.remove(UID); //Removes it from the list
+			removedSuccessfully = true;
+		}
+
+		return removedSuccessfully;
+	}
+	public Permit getPermit(String n) {//Returns a permit using the permit holders name
+		Permit p;
+		if (lnkPermit.containsKey(n)) { 
+			p = (Permit) lnkPermit.get(n);
+			return p;
+		}else {
+			return p=null;
+		}
+	}
+
+	public boolean hasPermit(String n) {    //Returns true or false if the entered permit holder is in the hashtable
+		Permit p;
+		if (lnkPermit.containsKey(n)) { 
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+
 }

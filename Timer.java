@@ -71,7 +71,9 @@ public class Timer extends JFrame implements ActionListener {
     	lnkPermit_list = p;
     	
     	setTitle("Timer");
+
         setLocation(40,600);
+
         setSize(350,150);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         Container window = getContentPane();
