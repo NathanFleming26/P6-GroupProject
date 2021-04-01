@@ -62,36 +62,60 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	 * @label See date
 	 * @directed
 	 */
+	
+	//global variables
 	private System_status lnkSystem_status;
 	private int date=1;
 	boolean editable = false;
 
 	//Declare elements used in JFrame
-	private JButton btn1, btn2, btn3, btn4, btn5, btn6, btnClear,btnClear1, btnR, btnmClear;
-	private JLabel lblName, lblReg, lblReg2, lblReg3, lblReg4,lblReg5, 
-	lblReg6, lblMake, lblModel, lblColour, lblType, 
-	lblDate, lblHost, lblRec, lblDel, lblCancel, lblMod, lblEnq;
+	
+	//BUTTONS
+	private JButton btnAdd, btnRecordWarning, btnDeleteWarning, btnCancel, btnEnquire, btnModify, btnEnqClear,btnAddClear, btnRetrieveDetails, btnModClear;
+	
+	//ELEMENTS FOR ADDING PERMIT
+	private JLabel lblAddName, lblAddReg, lblAddMake, lblAddModel, lblAddColour, lblSetType, 
+	lblAddDate, lblAddHost;
+	private JTextField txtAddName, txtAddReg, txtAddMake, txtAddModel, txtAddColour, txtAddDate, txtAddHost;
+	private JComboBox bxSetType;
+	
+	//ELEMENTS FOR WARNING PERMIT
+	private JLabel lblWarnReg, lblWarnRec  ;
+	private JTextField txtWarnReg;
+	
+	//ELEMENTS FOR DELETING WARNINGS
+	private JLabel lblDelWarning;
+	private JTextField txtDelWarningReg;
+	
+	//ELEMENTS FOR CANCELLING PERMIT
+	private JLabel lblRegCancel, lblCancel;
+	private JTextField txtRegCancel;
+	
+	//ELEMENTS FOR ENQUIRY
+	private JLabel lbleEnqName, lblEnqReg, lbleEnqMake, lbleEnqModel, lbleEnqColour, lblEnqType, lblEnqHost, lblEnqWarnings, lblEnqSuspended, lblEnqAccess;
+	private JTextField txtEnqName, txtEnqReg, txtEnqMake, txteEnqModel, txtEnqColour, txtEnqType, txtEnqWarnings, txtEnqSuspended, txtEnqAccess, txtEnqHost;
 
-	private JLabel lbleName, lbleReg, lbleMake, lbleModel, lbleColour, lbleType, lbleDate, lbleHost, lbleWarnings, lbleSuspended, lbleAccess;//labels for enquiry
-	private JTextField txteName, txteReg, txteMake, txteModel, txteColour, txteType, txteDate, txtmHost, txteWarnings, txteSuspended, txteAccess;
+	//ELEMENTS FOR MODIFYING PERMIT
+	private JLabel lblModName, lblModReg, lblModMake, lblModModel, lblModColour, lblModType, lblModHost;
+	private JTextField txtModName, txtModReg, txtModMake, txtModModel, txtModColour, txtModType, txtModHost;
 
-	private JLabel lblmName, lblmReg, lblmMake, lblmModel, lblmColour, lblmType, lblmDate, lblmHost;//labels for m
-	private JTextField txtmName, txtmReg, txtmMake, txtmModel, txtmColour, txtmType, txtmDate;
-
-	private JTextField txtName, txtReg, txtReg2, txtReg3, txtReg4, txtReg5, txtReg6,
-	txtMake, txtModel, txtColour, txtDate, txtHost, txteHost;
-	private JComboBox bxType;
+	//ALL OF THE TABS ON THE WINDOW
 	private JPanel addPermit, recWarning, delWarning, cancelPermit, statusEnquiry, modPermit;
+	
+	//DECLARE TABBED PANE AND LAYOUT FOR PANES
 	private JTabbedPane tab;
 	private GridLayout grid;
 
-	//Create the UI for Admin office
+	/*
+	 * Constructor for admin office, this sets up the UI and displays it
+	 */
 	public Administration_office(System_status s, Vehicle_list v, Permit_list p) {		//Constructor for Administration_office, sets up the window 
-		//instances of classes used
+		//Assign global variables to parameters passed to this constructor
 		lnkSystem_status = s;
 		lnkVehicle_list = v;
 		lnkPermit_list = p;
 
+		//initial window settings
 		setTitle("Administation Office   " + date);
 		setLocation(40,200);
 		setSize(450,350);
@@ -108,7 +132,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		statusEnquiry = new JPanel();
 		modPermit = new JPanel();
 
-		//layout of the tabs
+		//layout of the tabs, uses a gridlayout 
 		grid = new GridLayout(0, 2);
 		addPermit.setLayout(grid);
 		recWarning.setLayout(grid);
@@ -118,229 +142,222 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		modPermit.setLayout(grid);
 
 
-		//PERMIT TAB
-		lblName = new JLabel("Name:");
-		txtName = new JTextField("", 15);
-		addPermit.add(lblName, BorderLayout.CENTER);
-		addPermit.add(txtName, BorderLayout.CENTER);
+		//PERMIT TAB - Add all the addPermit elements
+		lblAddName = new JLabel("Name:");
+		txtAddName = new JTextField("", 15);
+		addPermit.add(lblAddName, BorderLayout.CENTER);
+		addPermit.add(txtAddName, BorderLayout.CENTER);
 
-		lblReg = new JLabel("Registration Number:");
-		txtReg = new JTextField("", 15);
-		addPermit.add(lblReg, BorderLayout.CENTER);
-		addPermit.add(txtReg, BorderLayout.CENTER);
+		lblAddReg = new JLabel("Registration Number:");
+		txtAddReg = new JTextField("", 15);
+		addPermit.add(lblAddReg, BorderLayout.CENTER);
+		addPermit.add(txtAddReg, BorderLayout.CENTER);
+
+		lblAddMake = new JLabel("Car make: ");
+		txtAddMake = new JTextField("", 15);
+		addPermit.add(lblAddMake);
+		addPermit.add(txtAddMake);
+
+		lblAddModel = new JLabel("Car model: ");
+		txtAddModel = new JTextField("", 15);
+		addPermit.add(lblAddModel);
+		addPermit.add(txtAddModel);
+
+		lblAddColour = new JLabel("Car colour: ");
+		txtAddColour = new JTextField("", 15);
+		addPermit.add(lblAddColour);
+		addPermit.add(txtAddColour);
 
 
-		lblMake = new JLabel("Car make: ");
-		txtMake = new JTextField("", 15);
-		addPermit.add(lblMake);
-		addPermit.add(txtMake);
+		String[] permitTypes = {"Day Visitor", "University Member", "Regular Visitor", "Permanent Visitor"};	//available types of passes, allows user to select one
+		lblSetType = new JLabel("Enter Permit Type: ");
+		bxSetType = new JComboBox(permitTypes);
+		bxSetType.setSelectedIndex(0);
+		addPermit.add(lblSetType);
+		addPermit.add(bxSetType);
 
-		lblModel = new JLabel("Car model: ");
-		txtModel = new JTextField("", 15);
-		addPermit.add(lblModel);
-		addPermit.add(txtModel);
+		lblAddDate = new JLabel("Visit date: ");
+		txtAddDate = new JTextField("", 15);
+		addPermit.add(lblAddDate);
+		addPermit.add(txtAddDate);
 
-		lblColour = new JLabel("Car colour: ");
-		txtColour = new JTextField("", 15);
-		addPermit.add(lblColour);
-		addPermit.add(txtColour);
+		lblAddHost = new JLabel("Host name: ");
+		txtAddHost = new JTextField("", 15);
+		addPermit.add(lblAddHost);
+		addPermit.add(txtAddHost);
 
-
-		String[] permitTypes = {"Day Visitor", "University Member", "Regular Visitor", "Permanent Visitor"};	//available types of passes
-		lblType = new JLabel("Enter Permit Type: ");
-		bxType = new JComboBox(permitTypes);
-		bxType.setSelectedIndex(0);
-		addPermit.add(lblType);
-		addPermit.add(bxType);
-
-		lblDate = new JLabel("Visit date: ");
-		txtDate = new JTextField("", 15);
-		addPermit.add(lblDate);
-		addPermit.add(txtDate);
-
-		lblHost = new JLabel("Host name: ");
-		txtHost = new JTextField("", 15);
-		addPermit.add(lblHost);
-		addPermit.add(txtHost);
-
-		btn1 = new JButton("Submit");
-		btn1.addActionListener(this);
-		addPermit.add(btn1);
+		btnAdd = new JButton("Submit");
+		btnAdd.addActionListener(this);
+		addPermit.add(btnAdd);
 		
-		btnClear1 = new JButton("Clear");
-		btnClear1.addActionListener(this);
-		addPermit.add(btnClear1);
+		btnAddClear = new JButton("Clear");
+		btnAddClear.addActionListener(this);
+		addPermit.add(btnAddClear);
 
 
-		//Warning tab
-		lblReg2 = new JLabel("Registration Number: ");
-		txtReg2 = new JTextField("", 15);
-		recWarning.add(lblReg2, BorderLayout.CENTER);
-		recWarning.add(txtReg2, BorderLayout.CENTER);
-		//may need to add date
+		//WARNING TAB - add warningTab elements
+		lblWarnReg = new JLabel("Registration Number: ");
+		txtWarnReg = new JTextField("", 15);
+		recWarning.add(lblWarnReg, BorderLayout.CENTER);
+		recWarning.add(txtWarnReg, BorderLayout.CENTER);
 
-		lblRec = new JLabel("Record warning");
-		recWarning.add(lblRec, BorderLayout.CENTER);
-		btn2 = new JButton("Record");
-		btn2.addActionListener(this);
-		recWarning.add(btn2);
+		lblWarnRec = new JLabel("Record warning");
+		recWarning.add(lblWarnRec, BorderLayout.CENTER);
+		btnRecordWarning = new JButton("Record");
+		btnRecordWarning.addActionListener(this);
+		recWarning.add(btnRecordWarning);
 
 
-		//Delete warning tab
-		lblReg3 = new JLabel("Registration Number:");
-		txtReg3 = new JTextField("", 15);
-		delWarning.add(lblReg3, BorderLayout.CENTER);
-		delWarning.add(txtReg3, BorderLayout.CENTER);
+		//DELETE WARNING TAB - add all delete warning elements
+		lblDelWarning = new JLabel("Registration Number:");
+		txtDelWarningReg = new JTextField("", 15);
+		delWarning.add(lblDelWarning, BorderLayout.CENTER);
+		delWarning.add(txtDelWarningReg, BorderLayout.CENTER);
 
-		lblDel = new JLabel("Delete warning");
-		delWarning.add(lblDel, BorderLayout.CENTER);
-		btn3 = new JButton("Delete");
-		btn3.addActionListener(this);
-		delWarning.add(btn3);
+		lblDelWarning = new JLabel("Delete warning");
+		delWarning.add(lblDelWarning, BorderLayout.CENTER);
+		btnDeleteWarning = new JButton("Delete");
+		btnDeleteWarning.addActionListener(this);
+		delWarning.add(btnDeleteWarning);
 
-		//Cancel Permit tab
-		lblReg4 = new JLabel("Registration Number:");
-		txtReg4 = new JTextField("", 15);
-		cancelPermit.add(lblReg4, BorderLayout.CENTER);
-		cancelPermit.add(txtReg4, BorderLayout.CENTER);
+		//CANCEL PERMIT TAB - Add all cancel permit elements
+		lblRegCancel = new JLabel("Permit holder name:");
+		txtRegCancel = new JTextField("", 15);
+		cancelPermit.add(lblRegCancel, BorderLayout.CENTER);
+		cancelPermit.add(txtRegCancel, BorderLayout.CENTER);
 
 		lblCancel = new JLabel("Cancel Permit");
 		cancelPermit.add(lblCancel, BorderLayout.CENTER);
-		btn4 = new JButton("Cancel");
-		btn4.addActionListener(this);
-		cancelPermit.add(btn4);
+		btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(this);
+		cancelPermit.add(btnCancel);
 
-		//Status Enquiry tab
+		//STATUS ENQUIRY TAB - Add all status enquiry elements
+		lbleEnqName = new JLabel("Name:");
+		txtEnqName = new JTextField("", 15);
+		statusEnquiry.add(lbleEnqName, BorderLayout.CENTER);
+		statusEnquiry.add(txtEnqName, BorderLayout.CENTER);
 
-		lbleName = new JLabel("Name:");
-		txteName = new JTextField("", 15);
-		statusEnquiry.add(lbleName, BorderLayout.CENTER);
-		statusEnquiry.add(txteName, BorderLayout.CENTER);
+		lblEnqReg = new JLabel("Registration Number:");
+		txtEnqReg = new JTextField("", 15);
+		txtEnqReg.setEditable(false);
+		statusEnquiry.add(lblEnqReg, BorderLayout.CENTER);
+		statusEnquiry.add(txtEnqReg, BorderLayout.CENTER);
 
-		lbleReg = new JLabel("Registration Number:");
-		txteReg = new JTextField("", 15);
-		txteReg.setEditable(false);
-		statusEnquiry.add(lbleReg, BorderLayout.CENTER);
-		statusEnquiry.add(txteReg, BorderLayout.CENTER);
+		lbleEnqMake = new JLabel("Car make: ");
+		txtEnqMake = new JTextField("", 15);
+		txtEnqMake.setEditable(false);
+		statusEnquiry.add(lbleEnqMake);
+		statusEnquiry.add(txtEnqMake);
 
+		lbleEnqModel = new JLabel("Car model: ");
+		txteEnqModel = new JTextField("", 15);
+		txteEnqModel.setEditable(false);
+		statusEnquiry.add(lbleEnqModel);
+		statusEnquiry.add(txteEnqModel);
 
-		lbleMake = new JLabel("Car make: ");
-		txteMake = new JTextField("", 15);
-		txteMake.setEditable(false);
-		statusEnquiry.add(lbleMake);
-		statusEnquiry.add(txteMake);
+		lbleEnqColour = new JLabel("Car colour: ");
+		txtEnqColour = new JTextField("", 15);
+		txtEnqColour.setEditable(false);
+		statusEnquiry.add(lbleEnqColour);
+		statusEnquiry.add(txtEnqColour);
 
-		lbleModel = new JLabel("Car model: ");
-		txteModel = new JTextField("", 15);
-		txteModel.setEditable(false);
-		statusEnquiry.add(lbleModel);
-		statusEnquiry.add(txteModel);
+		lblEnqType = new JLabel("Permit Type: ");
+		txtEnqType = new JTextField("", 15);
+		txtEnqType.setEditable(false);
+		statusEnquiry.add(lblEnqType);
+		statusEnquiry.add(txtEnqType);
 
-		lbleColour = new JLabel("Car colour: ");
-		txteColour = new JTextField("", 15);
-		txteColour.setEditable(false);
-		statusEnquiry.add(lbleColour);
-		statusEnquiry.add(txteColour);
+		lblEnqHost = new JLabel("Host name: ");
+		txtEnqHost = new JTextField("", 15);
+		txtEnqHost.setEditable(false);
+		statusEnquiry.add(lblEnqHost);
+		statusEnquiry.add(txtEnqHost);
 
-		lbleType = new JLabel("Permit Type: ");
-		txteType = new JTextField("", 15);
-		txteType.setEditable(false);
-		statusEnquiry.add(lbleType);
-		statusEnquiry.add(txteType);
+		lblEnqWarnings = new JLabel("Warnings: ");
+		txtEnqWarnings = new JTextField("", 15);
+		txtEnqWarnings.setEditable(false);
+		statusEnquiry.add(lblEnqWarnings);
+		statusEnquiry.add(txtEnqWarnings);
 
+		lblEnqSuspended = new JLabel("Suspended: ");
+		txtEnqSuspended = new JTextField("", 15);
+		txtEnqSuspended.setEditable(false);
+		statusEnquiry.add(lblEnqSuspended);
+		statusEnquiry.add(txtEnqSuspended);
 
-		lbleHost = new JLabel("Host name: ");
-		txteHost = new JTextField("", 15);
-		txteHost.setEditable(false);
-		statusEnquiry.add(lbleHost);
-		statusEnquiry.add(txteHost);
+		lblEnqAccess = new JLabel("Times accessed: ");
+		txtEnqAccess = new JTextField("", 15);
+		txtEnqAccess.setEditable(false);
+		statusEnquiry.add(lblEnqAccess);
+		statusEnquiry.add(txtEnqAccess);
 
-		lbleWarnings = new JLabel("Warnings: ");
-		txteWarnings = new JTextField("", 15);
-		txteWarnings.setEditable(false);
-		statusEnquiry.add(lbleWarnings);
-		statusEnquiry.add(txteWarnings);
+		btnEnquire = new JButton("Enquire");
+		btnEnquire.addActionListener(this);
+		statusEnquiry.add(btnEnquire);
 
-		lbleSuspended = new JLabel("Suspended: ");
-		txteSuspended = new JTextField("", 15);
-		txteSuspended.setEditable(false);
-		statusEnquiry.add(lbleSuspended);
-		statusEnquiry.add(txteSuspended);
-
-		lbleAccess = new JLabel("Times accessed: ");
-		txteAccess = new JTextField("", 15);
-		txteAccess.setEditable(false);
-		statusEnquiry.add(lbleAccess);
-		statusEnquiry.add(txteAccess);
-
-		btn5 = new JButton("Enquire");
-		btn5.addActionListener(this);
-		statusEnquiry.add(btn5);
-
-		btnClear = new JButton("Clear");
-		btnClear.addActionListener(this);
-		statusEnquiry.add(btnClear);
+		btnEnqClear = new JButton("Clear");
+		btnEnqClear.addActionListener(this);
+		statusEnquiry.add(btnEnqClear);
 
 
 
-		//Modify Permit
+		//MODIFY PERMIT TAB - add modify permit elements
+		lblModName = new JLabel("Name:");
+		txtModName = new JTextField("", 15);
+		modPermit.add(lblModName, BorderLayout.CENTER);
+		modPermit.add(txtModName, BorderLayout.CENTER);
 
-		lblmName = new JLabel("Name:");
-		txtmName = new JTextField("", 15);
-		modPermit.add(lblmName, BorderLayout.CENTER);
-		modPermit.add(txtmName, BorderLayout.CENTER);
+		lblModReg = new JLabel("Registration Number:");
+		txtModReg = new JTextField("", 15);
+		txtModReg.setEditable(false);
+		modPermit.add(lblModReg, BorderLayout.CENTER);
+		modPermit.add(txtModReg, BorderLayout.CENTER);
 
-		lblmReg = new JLabel("Registration Number:");
-		txtmReg = new JTextField("", 15);
-		txtmReg.setEditable(false);
-		modPermit.add(lblmReg, BorderLayout.CENTER);
-		modPermit.add(txtmReg, BorderLayout.CENTER);
+		lblModMake = new JLabel("Car make: ");
+		txtModMake = new JTextField("", 15);
+		txtModMake.setEditable(false);
+		modPermit.add(lblModMake);
+		modPermit.add(txtModMake);
 
+		lblModModel = new JLabel("Car model: ");
+		txtModModel = new JTextField("", 15);
+		txtModModel.setEditable(false);
+		modPermit.add(lblModModel);
+		modPermit.add(txtModModel);
 
-		lblmMake = new JLabel("Car make: ");
-		txtmMake = new JTextField("", 15);
-		txtmMake.setEditable(false);
-		modPermit.add(lblmMake);
-		modPermit.add(txtmMake);
+		lblModColour = new JLabel("Car colour: ");
+		txtModColour = new JTextField("", 15);
+		txtModColour.setEditable(false);
+		modPermit.add(lblModColour);
+		modPermit.add(txtModColour);
 
-		lblmModel = new JLabel("Car model: ");
-		txtmModel = new JTextField("", 15);
-		txtmModel.setEditable(false);
-		modPermit.add(lblmModel);
-		modPermit.add(txtmModel);
+		lblModType = new JLabel("Permit Type: ");
+		txtModType = new JTextField("", 15);
+		txtModType.setEditable(false);
+		modPermit.add(lblModType);
+		modPermit.add(txtModType);
 
-		lblmColour = new JLabel("Car colour: ");
-		txtmColour = new JTextField("", 15);
-		txtmColour.setEditable(false);
-		modPermit.add(lblmColour);
-		modPermit.add(txtmColour);
+		lblModHost = new JLabel("Host name: ");
+		txtModHost = new JTextField("", 15);
+		txtModHost.setEditable(false);
+		modPermit.add(lblModHost);
+		modPermit.add(txtModHost);
 
-		lblmType = new JLabel("Permit Type: ");
-		txtmType = new JTextField("", 15);
-		txtmType.setEditable(false);
-		modPermit.add(lblmType);
-		modPermit.add(txtmType);
+		btnRetrieveDetails = new JButton("Retrieve");
+		btnRetrieveDetails.addActionListener(this);
+		modPermit.add(btnRetrieveDetails);
 
+		btnModify = new JButton("Modify");
+		btnModify.addActionListener(this);
+		modPermit.add(btnModify);
 
-		lblmHost = new JLabel("Host name: ");
-		txtmHost = new JTextField("", 15);
-		txtmHost.setEditable(false);
-		modPermit.add(lblmHost);
-		modPermit.add(txtmHost);
-
-		btnR = new JButton("Retrieve");
-		btnR.addActionListener(this);
-		modPermit.add(btnR);
-
-		btn6 = new JButton("Modify");
-		btn6.addActionListener(this);
-		modPermit.add(btn6);
-
-		btnmClear = new JButton("Clear");
-		btnmClear.addActionListener(this);
-		modPermit.add(btnmClear);
+		btnModClear = new JButton("Clear");
+		btnModClear.addActionListener(this);
+		modPermit.add(btnModClear);
 
 
+		//Adds all the tabs
 		tab.addTab("Add permit", addPermit);
 		tab.addTab("Record warning", recWarning);
 		tab.addTab("Delete warning", delWarning);
@@ -369,18 +386,18 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 
 	@Override
+	//If a button is pressed
 	public void actionPerformed(ActionEvent e) {
-		//String button = e.getActionCommand();
 		String[] permitTypes = {"","Day Visitor", "University Member", "Regular Visitor", "Permanent Visitor"};
-		if (e.getSource()==btn1) {			//Add permit
-			String name = txtName.getText();
-			String reg = txtReg.getText();
-			String make = txtMake.getText();
-			String model = txtModel.getText();
-			String colour = txtColour.getText();
-			String type = (String) bxType.getSelectedItem();
-			String date = txtDate.getText();
-			String host = txtHost.getText();
+		if (e.getSource()==btnAdd) {			//Add permit
+			String name = txtAddName.getText();		//Get everything entered into text boxes
+			String reg = txtAddReg.getText();
+			String make = txtAddMake.getText();
+			String model = txtAddModel.getText();
+			String colour = txtAddColour.getText();
+			String type = (String) bxSetType.getSelectedItem();
+			String date = txtAddDate.getText();
+			String host = txtAddHost.getText();
 
 			if(name.equals("") || reg.equals("") || make.equals("") || model.equals("")|| colour.equals("")|| date.equals(""))
 			{//Check that all the fields havee been filled
@@ -411,7 +428,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 				}else if (type.equals("University Member")) {//Add a university member
 					lnkVehicle_list.addVehicle(reg, make, model, colour, name);
-					Vehicle_info v = lnkVehicle_list.getVehicle(reg);
+					Vehicle_info v = lnkVehicle_list.getVehicle(reg);		//creates vehicle, then gets it so it can be inserted into the permit
 					lnkPermit_list.addPermit(2, name, host, 0, v);
 					showMessageDialog(null, "University Member Added", "Permit Added", JOptionPane.INFORMATION_MESSAGE);
 
@@ -436,8 +453,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				}
 			}
 
-		}else if (e.getSource()==btn2) {	//Record Warning
-			String reg2 = txtReg2.getText();
+		}else if (e.getSource()==btnRecordWarning) {	//Record Warning
+			String reg2 = txtWarnReg.getText();
 			if (reg2.equals("")) {
 				showMessageDialog(null, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -448,8 +465,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			}
 			
 
-		}else if (e.getSource()==btn3) {	//Delete Warning
-			String reg3 = txtReg3.getText();
+		}else if (e.getSource()==btnDeleteWarning) {	//Delete Warning
+			String reg3 = txtDelWarningReg.getText();
 			if (reg3.equals("")) {//Ensure the field has been filled in appropriately
 				showMessageDialog(null, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
 			}else if(lnkVehicle_list.deleteWarning(reg3)) {
@@ -458,8 +475,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				showMessageDialog(null, "Warning delete unsuccessful, vehicle doesnt exist or doesnt have warnings", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 
-		}else if (e.getSource()==btn4) {	//Cancel Permit
-			String reg4 = txtReg4.getText();
+		}else if (e.getSource()==btnCancel) {	//Cancel Permit
+			String reg4 = txtRegCancel.getText();
 			if (reg4.equals("")) {
 				showMessageDialog(null, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
 			}else if(lnkPermit_list.removePermit(reg4)) {
@@ -469,8 +486,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			}
 			clearFields();
 
-		}else if (e.getSource()==btn5) {	//Status Enquiry - A member of the administration is able to obtain status details for a given user: details of permit, whether warnings are recorded, whether suspended, and how many entries to campus have occurred since the permit was issued.
-			String eName = txteName.getText();
+		}else if (e.getSource()==btnEnquire) {	//Status Enquiry - A member of the administration is able to obtain status details for a given user: details of permit, whether warnings are recorded, whether suspended, and how many entries to campus have occurred since the permit was issued.
+			String eName = txtEnqName.getText();
 			if (eName.equals("")) {
 				showMessageDialog(null, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
 			}else if (lnkPermit_list.hasPermit(eName))
@@ -479,35 +496,35 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				Vehicle_info v = p.getVehicle();
 				showMessageDialog(null, "Vehicle found", "Cancel", JOptionPane.INFORMATION_MESSAGE);
 				
-				txteReg.setText(v.getReg());
-				txteMake.setText(v.getMake());
-				txteModel.setText(v.getModel());
-				txteColour.setText(v.getColour());
-				txteHost.setText(p.getHostName());
-				txteType.setText(permitTypes[p.getPermitType()]);
-				txteWarnings.setText(String.valueOf(v.getWarning()));
-				txteSuspended.setText(String.valueOf(v.getSuspended()));
-				txteAccess.setText(String.valueOf(v.getAccesses()));
+				txtEnqReg.setText(v.getReg());
+				txtEnqMake.setText(v.getMake());
+				txteEnqModel.setText(v.getModel());
+				txtEnqColour.setText(v.getColour());
+				txtEnqHost.setText(p.getHostName());
+				txtEnqType.setText(permitTypes[p.getPermitType()]);
+				txtEnqWarnings.setText(String.valueOf(v.getWarning()));
+				txtEnqSuspended.setText(String.valueOf(v.getSuspended()));
+				txtEnqAccess.setText(String.valueOf(v.getAccesses()));
 			}else {
-				showMessageDialog(null, "Unable to find vehicle", "Cancel", JOptionPane.ERROR_MESSAGE);
-				txteReg.setText("");
-				txteMake.setText("");
-				txteModel.setText("");
-				txteColour.setText("");
-				txteHost.setText("");
-				txteType.setText("");
-				txteWarnings.setText("");
-				txteSuspended.setText("");
-				txteAccess.setText("");
+				showMessageDialog(null, "Unable to find permit", "Cancel", JOptionPane.ERROR_MESSAGE);
+				txtEnqReg.setText("");
+				txtEnqMake.setText("");
+				txteEnqModel.setText("");
+				txtEnqColour.setText("");
+				txtEnqHost.setText("");
+				txtEnqType.setText("");
+				txtEnqWarnings.setText("");
+				txtEnqSuspended.setText("");
+				txtEnqAccess.setText("");
 			}
 
-		}else if (e.getSource()==btnClear||e.getSource()==btnClear1) {	//Status Enquiry - A member of the administration is able to obtain status details for a given user: details of permit, whether warnings are recorded, whether suspended, and how many entries to campus have occurred since the permit was issued.
+		}else if (e.getSource()==btnEnqClear||e.getSource()==btnAddClear) {	//clear text boxes
 
 			clearFields();
 
 		}
-		else if (e.getSource()==btnR) {	//Modify permit(vehicle retrieved) - A member of the administration is able to obtain status details for a given user: details of permit, whether warnings are recorded, whether suspended, and how many entries to campus have occurred since the permit was issued.
-			String eName = txtmName.getText();
+		else if (e.getSource()==btnRetrieveDetails) {	//Modify permit(vehicle retrieved and can now be modified)
+			String eName = txtModName.getText();
 			if (eName.equals("")) {
 				showMessageDialog(null, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -516,31 +533,31 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				Permit p = lnkPermit_list.getPermit(eName);
 				Vehicle_info v = p.getVehicle();
 				int type =p.getPermitType();
-				txtmName.setEditable(false);
-				txtmReg.setText(v.getReg());
-				txtmMake.setText(v.getMake());
-				txtmMake.setEditable(true);
-				txtmModel.setText(v.getModel());
-				txtmModel.setEditable(true);
-				txtmColour.setText(v.getColour());
-				txtmColour.setEditable(true);
-				txtmType.setText(permitTypes[p.getPermitType()]);	//THIS STILL NEEDS TO BE DROP DOWN
-				txtmHost.setText(p.getHostName());
+				txtModName.setEditable(false);
+				txtModReg.setText(v.getReg());
+				txtModMake.setText(v.getMake());
+				txtModMake.setEditable(true);
+				txtModModel.setText(v.getModel());
+				txtModModel.setEditable(true);
+				txtModColour.setText(v.getColour());
+				txtModColour.setEditable(true);
+				txtModType.setText(permitTypes[p.getPermitType()]);	//THIS STILL NEEDS TO BE DROP DOWN
+				txtModHost.setText(p.getHostName());
 				if (type==1||type==3) {
-				txtmHost.setEditable(true);
+				txtModHost.setEditable(true);
 				}
 
 				editable = true;
 			}
-		}else if (e.getSource()==btn6&&editable==true) {	//mofify permit(modify retrieved vehicle) - A member of the administration is able to obtain status details for a given user: details of permit, whether warnings are recorded, whether suspended, and how many entries to campus have occurred since the permit was issued.
-			String eName = txtmName.getText();
-			String eReg = txteReg.getText();
+		}else if (e.getSource()==btnModify&&editable==true) {	//mofify permit(has clicked modify to change details)
+			String eName = txtModName.getText();
+			String eReg = txtEnqReg.getText();
 			Permit p = lnkPermit_list.getPermit(eName);
 			Vehicle_info v = p.getVehicle();
-			String make=txtmMake.getText();
-			String model = txtmModel.getText();
-			String colour = txtmColour.getText();
-			String host = txtmHost.getText();
+			String make=txtModMake.getText();
+			String model = txtModModel.getText();
+			String colour = txtModColour.getText();
+			String host = txtModHost.getText();
 			int type =p.getPermitType();
 			
 			//display error messages
@@ -558,61 +575,62 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				v.setColour(colour);
 				p.setHostName(host);
 
-				txtmReg.setEditable(false);
-				txtmMake.setEditable(false);
-				txtmModel.setEditable(false);
-				txtmColour.setEditable(false);
-				txtmHost.setEditable(false);
+				//dont allow further editing until retrieved again
+				txtModReg.setEditable(false);
+				txtModMake.setEditable(false);
+				txtModModel.setEditable(false);
+				txtModColour.setEditable(false);
+				txtModHost.setEditable(false);
 				showMessageDialog(null, "Vehicle modified", "Modified", JOptionPane.INFORMATION_MESSAGE);
 
 				editable = false;
 			}
 
-		}else if (e.getSource()==btnmClear) {	//Status Enquiry - A member of the administration is able to obtain status details for a given user: details of permit, whether warnings are recorded, whether suspended, and how many entries to campus have occurred since the permit was issued.
+		}else if (e.getSource()==btnModClear) {	//modify permit clear boxes
 				//clear details
-				txtmName.setText("");
-				txtmReg.setText("");
-				txtmMake.setText("");
-				txtmModel.setText("");
-				txtmColour.setText("");
+				txtModName.setText("");
+				txtModReg.setText("");
+				txtModMake.setText("");
+				txtModModel.setText("");
+				txtModColour.setText("");
 
-				txtmType.setText("");
-				txtmName.setEditable(true);
-				txtmType.setEditable(false);
-				txtmReg.setEditable(false);
-				txtmMake.setEditable(false);
-				txtmModel.setEditable(false);
-				txtmColour.setEditable(false);
-				txtmHost.setEditable(false);
+				txtModType.setText("");
+				txtModName.setEditable(true);
+				txtModType.setEditable(false);
+				txtModReg.setEditable(false);
+				txtModMake.setEditable(false);
+				txtModModel.setEditable(false);
+				txtModColour.setEditable(false);
+				txtModHost.setEditable(false);
 		}
 
 	}
 	public void clearFields()//This method will clear all text fields when calle
 	{
-	    txtName.setText("");
-	    txtReg.setText("");
-	    txtMake.setText("");
-	    txtModel.setText("");
-	    txtColour.setText("");
-	    bxType.setSelectedIndex(0);
-	    txtDate.setText("");
-	    txtHost.setText("");
+	    txtAddName.setText("");
+	    txtAddReg.setText("");
+	    txtAddMake.setText("");
+	    txtAddModel.setText("");
+	    txtAddColour.setText("");
+	    bxSetType.setSelectedIndex(0);
+	    txtAddDate.setText("");
+	    txtAddHost.setText("");
 
-	    txtReg2.setText("");
+	    txtWarnReg.setText("");
 
-	    txtReg3.setText("");
+	    txtDelWarningReg.setText("");
 
-	    txtReg4.setText("");
+	    txtRegCancel.setText("");
 	    
-	    txteReg.setText("");
-	    txteMake.setText("");
-	    txteModel.setText("");
-	    txteColour.setText("");
-	    txteHost.setText("");
-	    txteType.setText("");
-	    txteWarnings.setText("");
-	    txteSuspended.setText("");
-	    txteAccess.setText("");
+	    txtEnqReg.setText("");
+	    txtEnqMake.setText("");
+	    txteEnqModel.setText("");
+	    txtEnqColour.setText("");
+	    txtEnqHost.setText("");
+	    txtEnqType.setText("");
+	    txtEnqWarnings.setText("");
+	    txtEnqSuspended.setText("");
+	    txtEnqAccess.setText("");
 		
 	}
 }
