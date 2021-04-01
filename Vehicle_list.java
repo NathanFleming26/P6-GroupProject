@@ -59,17 +59,18 @@ public class Vehicle_list {
 
 	public boolean setWarning(String reg) {//Adds a warning to the vehicle with the entered reg
 		Vehicle_info v;
+		boolean warning = false;
 		if (lnkVehicle.containsKey(reg)) { 
 			v = lnkVehicle.get(reg);
 			if (v.getWarning()<3){
 				v.setWarning();
-				return true;
+				warning = true;
 			}
 			if(v.getWarning()==3) {
 				v.setSuspended(true);
 			}
 		}
-		return false;
+		return warning;
 	}
 	public int getWarning(String reg) {//Returns the number of warnings a vehicle has
 		Vehicle_info v;
@@ -93,16 +94,23 @@ public class Vehicle_list {
 	}
 	public boolean deleteWarning(String reg) {//Reduces the value of warnings for the vehicle by 1
 		Vehicle_info v;
+		boolean warning=false;
 		if (lnkVehicle.containsKey(reg)) { 
 			v = (Vehicle_info) lnkVehicle.get(reg);
 			if (v.getWarning()==0) {
-				return false;
-			}else {
+			}else if (v.getWarning()<3){
 				v.deleteWarning();
-				return true;
+				warning= true;
+			}else
+			{
+				v.deleteWarning();
+				warning= true;
+			}
+			if (v.getWarning()<3){
+				v.setSuspended(false);
 			}
 		}
-		return false;
+		return warning;
 	}
 
 	public boolean vehicleExists(String reg)//Returns true if the vehicle is already in the hashtable

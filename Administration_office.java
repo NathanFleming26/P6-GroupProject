@@ -199,7 +199,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		delWarning.add(btn3);
 
 		//Cancel Permit tab
-		lblReg4 = new JLabel("Registration Number:");
+		lblReg4 = new JLabel("Permit holder name:");
 		txtReg4 = new JTextField("", 15);
 		cancelPermit.add(lblReg4, BorderLayout.CENTER);
 		cancelPermit.add(txtReg4, BorderLayout.CENTER);
